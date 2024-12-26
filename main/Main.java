@@ -27,6 +27,9 @@ public class Main {
         head = deleteAtFront(head);
         head = insertAtPosition(head, 12, 3);
         head = deleteAtPosition(head, 3);
+        head = insertAtEnd(head, 8);
+        head = insertAtEnd(head, 9);
+        head = insertAtEnd(head, 10);
         printList(head);
     }
 
@@ -86,11 +89,13 @@ public class Main {
             System.err.println("The List is Empty");
             return end;
         } else {
+            int addData = end.getData();
             Node point = head;
             while (point.getNext() != null) {
                 point = point.getNext();
             }
             point.setNext(end);
+            System.out.println("The Node which is added in the end is: "+ addData);
             return head;
         }
     }
