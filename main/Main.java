@@ -30,6 +30,8 @@ public class Main {
         head = insertAtEnd(head, 8);
         head = insertAtEnd(head, 9);
         head = insertAtEnd(head, 10);
+        head = deleteFromEnd(head);
+        head = deleteMiddleNode(head);
         printList(head);
     }
 
@@ -151,6 +153,23 @@ public class Main {
             int deletedData = temp.getNext().getData();
             temp.setNext(null);
             System.out.println("The Deleted Node from the end is: " + deletedData);
+            return head;
+        }
+    }
+    public static Node deleteMiddleNode(Node head) {
+        if (head == null || head.getNext() == null) {
+            return null;
+        } else {
+            Node slow = head;
+            Node fast = head;
+            fast = fast.getNext().getNext();
+            while (fast.getNext() != null && fast.getNext().getNext() != null) {
+                slow = slow.getNext();
+                fast = fast.getNext().getNext();
+            }
+            int deletedData = slow.getNext().getData();
+            slow.setNext(slow.getNext().getNext());
+            System.out.println("The Deleted Data from the middle is: " + deletedData);
             return head;
         }
     }
