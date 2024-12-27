@@ -38,12 +38,16 @@ public class Main {
             System.out.println("The Linked List is Empty");
         } else {
             Node current = head;
+            int length = 0;
             System.out.print("The Linked List is: ");
             while (current != null) {
                 System.out.print(current.getData() + " -> ");
                 current = current.getNext();
+                length++;
             }
-            System.out.print("null");
+            System.out.print("null.\n");
+
+            System.out.println("The Length of the Linked List is: "+ length);
         }
     }
 
