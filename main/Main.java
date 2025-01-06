@@ -1,5 +1,7 @@
 package main;
+
 import node.Node;
+
 public class Main {
     public static void main(String[] args) {
         Node one = new Node(1);
@@ -30,6 +32,10 @@ public class Main {
         head = insertAtEnd(head, 8);
         head = insertAtEnd(head, 9);
         head = insertAtEnd(head, 10);
+        head = deleteFromEnd(head);
+        head = deleteMiddleNode(head);
+        findPositionOfNode(head, 5);
+        head = removeNthFromEnd(head, 2);
         printList(head);
     }
 
@@ -47,7 +53,7 @@ public class Main {
             }
             System.out.print("null.\n");
 
-            System.out.println("The Length of the Linked List is: "+ length);
+            System.out.println("The Length of the Linked List is: " + length);
         }
     }
 
@@ -99,7 +105,7 @@ public class Main {
                 point = point.getNext();
             }
             point.setNext(end);
-            System.out.println("The Node which is added in the end is: "+ addData);
+            System.out.println("The Node which is added in the end is: " + addData);
             return head;
         }
     }
@@ -121,7 +127,8 @@ public class Main {
             if (temp.getNext() != null) {
                 int deletedData = temp.getNext().getData();
                 temp.setNext(temp.getNext().getNext());
-                System.out.println("The Deleted Node is: " + deletedData + " and the Position of that node is: " + position);
+                System.out.println(
+                        "The Deleted Node is: " + deletedData + " and the Position of that node is: " + position);
             }
         }
         return head;
@@ -153,5 +160,55 @@ public class Main {
             System.out.println("The Deleted Node from the end is: " + deletedData);
             return head;
         }
+    }
+
+    public static Node deleteMiddleNode(Node head) {
+        if (head == null || head.getNext() == null) {
+            return null;
+        } else {
+            Node slow = head;
+            Node fast = head;
+            fast = fast.getNext().getNext();
+            while (fast.getNext() != null && fast.getNext().getNext() != null) {
+                slow = slow.getNext();
+                fast = fast.getNext().getNext();
+            }
+            int deletedData = slow.getNext().getData();
+            slow.setNext(slow.getNext().getNext());
+            System.out.println("The Deleted Data from the middle is: " + deletedData);
+            return head;
+        }
+    }
+
+    public static int findPositionOfNode(Node head, int data) {
+        Node temp = head;
+        int position = 0;
+        while (temp != null) {
+            if (temp.getData() == data) {
+                System.out.println("The Position of the Node " + data + " is: " + position);
+                return position;
+            }
+            temp = temp.getNext();
+            position++;
+
+        }
+        System.out.println("Node with data " + data + " not found.");
+        return -1;
+    }
+
+    public static Node removeNthFromEnd(Node head, int n) {
+        Node fast = head;
+        for (int i = 0; i < n; i++) {
+            fast = fast.getNext();
+        }
+        Node slow = head;
+        while(fast.getNext() != null){
+            slow = slow.getNext();
+            fast = fast.getNext();
+        }
+        int deletedData = slow.getNext().getData();
+        System.out.println("The Deleted Nth Node from the end of the list: " + deletedData);
+        slow.setNext(slow.getNext().getNext());
+        return head;
     }
 }
