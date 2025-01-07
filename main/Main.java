@@ -31,11 +31,18 @@ public class Main {
         head = deleteAtPosition(head, 3);
         head = insertAtEnd(head, 8);
         head = insertAtEnd(head, 9);
-        head = insertAtEnd(head, 10);
+        head = insertAtEnd(head, 5);
+        head = insertAtEnd(head, 5);
+        head = insertAtEnd(head, 5);
+        head = insertAtEnd(head, 9);
+        head = insertAtEnd(head, 9);
+        head = insertAtEnd(head, 2);
+        head = insertAtEnd(head, 2);
+        head = insertAtEnd(head, 2);
+        head = removeDuplicateNode(head);
+        head = insertAtMiddle(head, 0);
         head = deleteFromEnd(head);
-        head = deleteMiddleNode(head);
-        findPositionOfNode(head, 5);
-        head = removeNthFromEnd(head, 2);
+        head = deleteFromEnd(head);
         printList(head);
     }
 
@@ -110,6 +117,32 @@ public class Main {
         }
     }
 
+    public static Node insertAtMiddle(Node head, int data) {
+        Node mid = new Node(data);
+        mid.setNext(null);
+        if (head == null) {
+            System.out.println("The list is empty. New node becomes the head.");
+            return mid;
+        }
+        if (head.getNext() == null) {
+            System.out.println("The list has only one node. Inserting new node after head.");
+            mid.setNext(head.getNext());
+            head.setNext(mid);
+            return head;
+        }
+        Node slow = head;
+        Node fast = head;
+        while (fast != null && fast.getNext() != null) {
+            slow = slow.getNext();
+            fast = fast.getNext().getNext();
+        }
+        System.out.println("Middle node found with data: " + slow.getData());
+        System.out.println("Inserting new node with data: " + data + " after node with data: " + slow.getData());
+        mid.setNext(slow.getNext());
+        slow.setNext(mid);
+        return head;
+    }
+
     public static Node deleteAtPosition(Node head, int position) {
         if (head == null) {
             System.out.println("The List is Empty");
@@ -162,53 +195,20 @@ public class Main {
         }
     }
 
-    public static Node deleteMiddleNode(Node head) {
+    public static Node removeDuplicateNode(Node head) {
+        Node curr = head;
+        while (curr != null && curr.getNext() != null) {
+            if (curr.getData() == curr.getNext().getData()) {
+                System.out.println("Removing duplicate node with data: " + curr.getNext().getData());
+                curr.setNext(curr.getNext().getNext());
+            } else {
+                curr = curr.getNext();
+            }
+        }
         if (head == null || head.getNext() == null) {
-            return null;
-        } else {
-            Node slow = head;
-            Node fast = head;
-            fast = fast.getNext().getNext();
-            while (fast.getNext() != null && fast.getNext().getNext() != null) {
-                slow = slow.getNext();
-                fast = fast.getNext().getNext();
-            }
-            int deletedData = slow.getNext().getData();
-            slow.setNext(slow.getNext().getNext());
-            System.out.println("The Deleted Data from the middle is: " + deletedData);
-            return head;
+            System.out.println("No duplicates found.");
         }
-    }
-
-    public static int findPositionOfNode(Node head, int data) {
-        Node temp = head;
-        int position = 0;
-        while (temp != null) {
-            if (temp.getData() == data) {
-                System.out.println("The Position of the Node " + data + " is: " + position);
-                return position;
-            }
-            temp = temp.getNext();
-            position++;
-
-        }
-        System.out.println("Node with data " + data + " not found.");
-        return -1;
-    }
-
-    public static Node removeNthFromEnd(Node head, int n) {
-        Node fast = head;
-        for (int i = 0; i < n; i++) {
-            fast = fast.getNext();
-        }
-        Node slow = head;
-        while(fast.getNext() != null){
-            slow = slow.getNext();
-            fast = fast.getNext();
-        }
-        int deletedData = slow.getNext().getData();
-        System.out.println("The Deleted Nth Node from the end of the list: " + deletedData);
-        slow.setNext(slow.getNext().getNext());
         return head;
     }
+
 }
